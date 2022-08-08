@@ -4,8 +4,8 @@
 set -e
 
 # Wait for the backend to be up, if we know where it is.
- if [ -n "$HEALTH_CHECK_HOST" ]; then
-  /app/scripts/wait-for-it.sh "$HEALTH_CHECK_HOST:${HEALTH_CHECK_PORT:-8080}"
+ if [ -n "$API_URL" ]; then
+  /app/scripts/wait-for.sh "$API_URL/$API_HEALTHCHECK"
  fi
 
 # Run the main container command.

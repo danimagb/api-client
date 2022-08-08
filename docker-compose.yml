@@ -11,7 +11,7 @@ services:
       - VAULT_ADDR=http://vault:8200
       - VAULT_TOKEN=8fb95528-57c6-422e-9722-d2147bcba8ed
       - PSQL_USER=root
-      - PSQL_PASSWORD=password
+      - PSQL_PASSWORD=passwor
       - PSQL_HOST=postgresql
       - PSQL_PORT=5432
       - STACK_NAME=f3-interview-accountapi
@@ -21,11 +21,6 @@ services:
       - DATABASE-PASSWORD=123
     ports:
       - 8080:8080
-    # healthcheck:
-    #   test: wget --no-verbose --tries=1 --spider http://accountapi:8080/v1/health || exit 1
-    #   interval: 30s
-    #   timeout: 30s
-    #   retries: 10
   postgresql:
     image: postgres:9.5-alpine
     healthcheck:
@@ -59,5 +54,5 @@ services:
     depends_on:
       - accountapi
     environment:
-      - ACCOUNTAPIHOST=accountapi
       - API_URL=http://accountapi:8080
+      - API_HEALTHCHECK=v1/health

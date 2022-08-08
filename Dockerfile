@@ -1,6 +1,6 @@
 FROM golang:1.17-alpine AS base
 ENV CGO_ENABLED=0
-RUN apk update && apk add bash
+RUN apk update && apk add wget
 WORKDIR /app
 COPY . /app
 COPY go.mod go.sum .

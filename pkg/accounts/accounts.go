@@ -38,17 +38,19 @@ func(ac *AccountsClient) Fetch(ctx context.Context, id uuid.UUID) (*models.Accou
 
 	response, err := ac.baseClient.Send(apiReq)
 
-	if(err != nil){
+	if err != nil{
 		return  nil, err
 	}
 
-	switch response.StatusCode() {
-		case 200:
-			return accountResponse, nil
-		default:
-			clientError := core.NewApiClientError("Unexpected status code", response.StatusCode(), apiError.ErrorMessage, response)
-			return nil, clientError
+	if response.StatusCode() != 200{
+		clientError := core.NewApiClientError(
+			"Status code does not represent success for this request",
+			response.StatusCode(),
+			apiError.ErrorMessage, response)
+		return nil, clientError
 	}
+
+	return accountResponse, nil
 }
 
 func(ac *AccountsClient) Create(ctx context.Context, accountData *models.AccountRequest) (*models.AccountResponse, error){
@@ -65,17 +67,19 @@ func(ac *AccountsClient) Create(ctx context.Context, accountData *models.Account
 
 	response, err := ac.baseClient.Send(apiReq)
 
-	if(err != nil){
+	if err != nil {
 		return  nil, err
 	}
 
-	switch response.StatusCode(){
-		case 201:
-			return accountResponse, nil
-		default:
-			clientError := core.NewApiClientError("Unexpected status code", response.StatusCode(), apiError.ErrorMessage, response)
-			return nil, clientError
+	if response.StatusCode() != 201 {
+		clientError := core.NewApiClientError(
+			"Status code does not represent success for this request",
+			response.StatusCode(),
+			apiError.ErrorMessage, response)
+		return nil, clientError
 	}
+
+	return accountResponse, nil
 }
 
 func(ac *AccountsClient) Delete(ctx context.Context, id uuid.UUID, version int64) error{
@@ -91,15 +95,17 @@ func(ac *AccountsClient) Delete(ctx context.Context, id uuid.UUID, version int64
 
 	response, err := ac.baseClient.Send(apiReq)
 
-	if(err != nil){
+	if err != nil {
 		return  err
 	}
 
-	switch response.StatusCode() {
-		case 204:
-			return nil
-		default:
-			clientError := core.NewApiClientError("Unexpected status code", response.StatusCode(), apiError.ErrorMessage, response)
-			return clientError
+	if response.StatusCode() != 204 {
+		clientError := core.NewApiClientError(
+			"Status code does not represent success for this request",
+			response.StatusCode(),
+			apiError.ErrorMessage, response)
+		return clientError
 	}
+
+	return nil
 }

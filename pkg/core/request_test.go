@@ -105,7 +105,7 @@ func TestGetContext(t *testing.T) {
 		// Arrange
 		expected := context.Background()
 		expected = context.WithValue(expected, "myKey", "myValue")
-		
+
 		request := NewRequestBuilder(http.MethodPost).
 			WithContext(expected).
 			Build()
