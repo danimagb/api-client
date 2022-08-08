@@ -26,7 +26,7 @@ func SetupNewClient(t *testing.T) *form3.Form3{
 
 	client, err := form3.NewClient(
 		form3.WithBaseUrl(*u),
-		form3.WithTimeoutInMilliseconds(30),
+		form3.WithTimeoutInMilliseconds(1000),
 	)
 
 	if err != nil {
