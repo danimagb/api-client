@@ -34,6 +34,8 @@ As described in the submission guide, the solution meets the following requireme
 ```tree
 
 ├── Dockerfile
+├── integration-tests-entrypoint.sh.go
+├── wait-for.sh
 ├── Makefile
 ├── README.md
 ├── docker-compose.yml
@@ -59,11 +61,8 @@ As described in the submission guide, the solution meets the following requireme
 │   ├── form3.go
 │   └── form3_test.go
 ├── scripts
-│   ├── db
-│   │   └── 10-init.sql
-│   └── wait-for
-│       ├── integration-tests-entrypoint.sh.go
-│       └── wait-for.sh
+│   └── db
+│       └── 10-init.sql
 └── tests
     └── integration
         ├── accounts_test.go
