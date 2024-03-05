@@ -1,6 +1,6 @@
 <p align="center">
 <h1 align="center">Api Client</h1>
-<p align="center">Simple HTTP Api client library made in go allowing interaction an example Accounts Api</p>
+<p align="center">Simple HTTP Api client library made in go allowing interaction with http api's</p>
 
 ## Prerequisites
 
