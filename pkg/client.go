@@ -1,4 +1,4 @@
-package form3
+package client
 
 import (
 	"fmt"
@@ -10,10 +10,10 @@ import (
 )
 
 const (
-	defaultBaseURL   = "https://api.form3.tech/"
+	defaultBaseURL   = "https://api.dummy.tech/"
 )
 
-type Form3 struct{
+type Client struct{
 	httpClient *http.Client
 	baseUrl	url.URL
 	userAgent string
@@ -21,67 +21,67 @@ type Form3 struct{
 	Accounts *accounts.AccountsClient
 }
 
-type ClientOption func (*Form3) error
+type ClientOption func (*Client) error
 
 
-func NewClient(options ... ClientOption) (*Form3, error){
+func NewClient(options ... ClientOption) (*Client, error){
 	httpClient := &http.Client{}
 
 	baseUrl,_ := url.Parse(defaultBaseURL)
 
-	form3 := &Form3{
+	client := &Client{
 		httpClient: httpClient,
 		baseUrl: *baseUrl,
 	}
 
 	for _, option := range options{
-		err := option(form3)
+		err := option(client)
 
 		if(err != nil){
-			return nil, fmt.Errorf("error when creating Form3 Client %w", err)
+			return nil, fmt.Errorf("error when creating Client %w", err)
 		}
 	}
 
 	baseClient := &core.BaseClient{
-		BaseUrl: form3.baseUrl,
-		UserAgent: form3.userAgent,
-		HttpClient: form3.httpClient,
-		Timeout: form3.timeout,
+		BaseUrl: client.baseUrl,
+		UserAgent: client.userAgent,
+		HttpClient: client.httpClient,
+		Timeout: client.timeout,
 	}
 
 
-	form3.Accounts = accounts.New(baseClient)
+	client.Accounts = accounts.New(baseClient)
 
-	return form3, nil
+	return client, nil
 }
 
 func WithHttpClient(c *http.Client) ClientOption{
-	return func(form3 *Form3) error {
+	return func(client *Client) error {
 		if c != nil{
-			form3.httpClient = c
+			client.httpClient = c
 		}
 		return nil
 	}
 }
 
 func WithBaseUrl(url url.URL) ClientOption{
-	return func(form3 *Form3) error {
-		form3.baseUrl = url
+	return func(client *Client) error {
+		client.baseUrl = url
 		return nil
 	}
 }
 
 func WithUserAgent(userAgent string) ClientOption{
-	return func(form3 *Form3) error {
-		form3.userAgent = userAgent
+	return func(client *Client) error {
+		client.userAgent = userAgent
 		return nil
 	}
 }
 
 func WithTimeoutInMilliseconds(timeout int) ClientOption{
-	return func(form3 *Form3) error {
+	return func(client *Client) error {
 		if timeout > 0{
-			form3.timeout = timeout
+			client.timeout = timeout
 			return nil
 		}
 		return fmt.Errorf("timeout must be greater than zero (actual timeout: %d)", timeout)

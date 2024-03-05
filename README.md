@@ -1,12 +1,6 @@
 <p align="center">
-<h1 align="center">Form3 Api Client</h1>
-<p align="center">Simple HTTP Api client library made in go allowing interaction with Form3 Accounts Api</p>
-
-## Candidate
-
-Daniel Magalhães
-
-_I'm new to go._
+<h1 align="center">Api Client</h1>
+<p align="center">Simple HTTP Api client library made in go allowing interaction an example Accounts Api</p>
 
 ## Prerequisites
 
@@ -17,17 +11,9 @@ The following list of software is based on the versions I've used to build this 
 - [Docker compose 1.29.2](https://docs.docker.com/compose/release-notes/#1292)
 - [GNU Make 4.2.1](https://lists.gnu.org/archive/html/info-gnu/2016-06/msg00005.html)
 
-## Requirements
-
-As described in the submission guide, the solution meets the following requirements:
-
-- Be written in Go.
-- Use the `docker-compose.yaml` of this repository.
-- Be a client library suitable for use in another software project.
-- Implement the `Create`, `Fetch`, and `Delete` operations on the `accounts` resource.
-- Be well tested to the level you would expect in a commercial environment. Note that tests are expected to run against the provided fake account API.
-- Be simple and concise.
-- Have tests that run from `docker-compose up` - our reviewers will run `docker-compose up` to assess if your tests pass.
+## What does this repo contains
+- Client library suitable for use in another software project.
+- Tests that run from `docker-compose up`
 
 ## Project Structure
 
@@ -58,8 +44,8 @@ As described in the submission guide, the solution meets the following requireme
 │   │     └── response.go
 │   ├── models
 │   │     └── models.go
-│   ├── form3.go
-│   └── form3_test.go
+│   ├── client.go
+│   └── client_test.go
 ├── scripts
 │   └── db
 │       └── 10-init.sql
@@ -75,9 +61,9 @@ The Library code related to the Api Client implementation that's ok to use by ex
 
 Inside that directory there are 4 go packages defined:
 
-### form3
+### client
 
-This is the entrypoint for the Api client usage. It allows the creation of a Form3 Client with possibility to define some options. This is accomplished implementing the options pattern.
+This is the entrypoint for the Api client usage. It allows the creation of a Client with possibility to define some options. This is accomplished implementing the options pattern.
 It has specific client implementations that are built during the client creation. E.g: Accounts
 
 ### core
@@ -103,9 +89,9 @@ Complete examples can be found under the `/examples` directory, but here is a br
 
 ```go
 
-client, _ := form3.NewClient(
-  form3.WithBaseUrl(*u),
-  form3.WithTimeoutInMilliseconds(30),
+client, _ := client.NewClient(
+  client.WithBaseUrl(*u),
+  client.WithTimeoutInMilliseconds(30),
 )
 
 accountFetchResponse, err := client.Accounts.Fetch(ctx, uuid)
@@ -116,9 +102,9 @@ accountFetchResponse, err := client.Accounts.Fetch(ctx, uuid)
 
 ```go
 
-client, _ := form3.NewClient(
-  form3.WithBaseUrl(*u),
-  form3.WithTimeoutInMilliseconds(30),
+client, _ := client.NewClient(
+  client.WithBaseUrl(*u),
+  client.WithTimeoutInMilliseconds(30),
 )
 
 accountCreationResponse, err := client.Accounts.Create(ctx, newAccount)
@@ -129,9 +115,9 @@ accountCreationResponse, err := client.Accounts.Create(ctx, newAccount)
 
 ```go
 
-client, _ := form3.NewClient(
-  form3.WithBaseUrl(*u),
-  form3.WithTimeoutInMilliseconds(30),
+client, _ := client.NewClient(
+  client.WithBaseUrl(*u),
+  client.WithTimeoutInMilliseconds(30),
 )
 
 err = client.Accounts.Delete(ctx, uuid, version)

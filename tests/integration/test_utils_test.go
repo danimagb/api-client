@@ -5,7 +5,7 @@ import (
 	"os"
 	"testing"
 
-	form3 "github.com/danimagb/api-client/pkg"
+	client "github.com/danimagb/api-client/pkg"
 )
 
 const(
@@ -13,7 +13,7 @@ const(
 )
 
 
-func SetupNewClient(t *testing.T) *form3.Form3{
+func SetupNewClient(t *testing.T) *client.Client{
 	host := os.Getenv("API_URL")
 	if len(host) == 0{
 		host = defaultHost
@@ -21,16 +21,16 @@ func SetupNewClient(t *testing.T) *form3.Form3{
 
 	u, err := url.Parse(host)
 	if err != nil {
-		t.Errorf("Error parsing url to create form3 client: %v", err)
+		t.Errorf("Error parsing url to create client: %v", err)
 	}
 
-	client, err := form3.NewClient(
-		form3.WithBaseUrl(*u),
-		form3.WithTimeoutInMilliseconds(1000),
+	client, err := client.NewClient(
+		client.WithBaseUrl(*u),
+		client.WithTimeoutInMilliseconds(1000),
 	)
 
 	if err != nil {
-		t.Errorf("Error creating form3 client: %v", err)
+		t.Errorf("Error creating client client: %v", err)
 	}
 
 	return client

@@ -7,7 +7,7 @@ import (
 	"log"
 	"net/url"
 
-	form3 "github.com/danimagb/api-client/pkg"
+	client "github.com/danimagb/api-client/pkg"
 	"github.com/danimagb/api-client/pkg/models"
 	"github.com/google/uuid"
 )
@@ -19,9 +19,9 @@ func main(){
 		log.Fatal(err)
 	}
 
-	client, err := form3.NewClient(
-		form3.WithBaseUrl(*u),
-		form3.WithTimeoutInMilliseconds(30),
+	client, err := client.NewClient(
+		client.WithBaseUrl(*u),
+		client.WithTimeoutInMilliseconds(30),
 	)
 	if err != nil {
 		log.Fatal(err)
